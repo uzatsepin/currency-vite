@@ -32,7 +32,7 @@ export const ConverterNames = () => {
       <h1 className="text-black text-2xl mb-10 font-semibold text-center">
         Currency Exchange Rate 💵
       </h1>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="flex flex-col mb-6 gap-4 items-center justify-center w-3/4 m-auto sm:w-2/4 md:flex-row md:w-full md:gap-9">
           <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700" htmlFor="text">
