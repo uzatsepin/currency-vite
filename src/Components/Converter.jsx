@@ -37,7 +37,7 @@ export const ConverterNames = () => {
       <form>
         <div className="flex flex-row mb-6 gap-9 items-center justify-center">
           <div className="flex-1">
-            <label className="font-bold text-sm block" htmlFor="text">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="text">
               Amount
             </label>
             <input
