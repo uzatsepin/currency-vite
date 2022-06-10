@@ -224,7 +224,11 @@ export const ConverterNames = () => {
               </div>
               <div className="flex gap-1 font-normal items-baseline">
                 <p className="text-2xl font-bold md:text-3xl">
-                  {state.result?.toFixed(2)} {convertTo}
+                  {state.result?.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  {convertTo}
                 </p>
               </div>
             </div>
