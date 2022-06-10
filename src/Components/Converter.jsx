@@ -15,14 +15,12 @@ export const ConverterNames = () => {
   const [rates, setRates] = useState({});
   const [amount, setAmount] = useState('');
 
-  const amountValue = amount ? `?amount=${amount}` : '';
-
   useEffect(() => {
     axios
       .get(`https://api.exchangerate.host/convert?from=${base}&to=${convertTo}&amount=${amount}`)
       .then((res) => setState(res.data));
     axios.get('https://api.exchangerate.host/latest').then((res) => setRates(res.data.rates));
-  }, [base, amountValue]);
+  }, [amount, convertTo, base]);
 
   const swapConversion = () => {
     setBase(convertTo);
@@ -30,26 +28,26 @@ export const ConverterNames = () => {
   };
 
   return (
-    <section className="pt-14 bg-white pb-14 px-6 shadow">
+    <section className="pt-14 bg-white pb-14 px-6 shadow-md">
       <h1 className="text-black text-2xl mb-10 font-semibold text-center">
-        Currency Exchange Rate
+        Currency Exchange Rate 💵
       </h1>
       <form>
-        <div className="flex flex-row mb-6 gap-9 items-center justify-center">
-          <div className="flex-1">
+        <div className="flex flex-col mb-6 gap-4 items-center justify-center w-3/4 m-auto sm:w-2/4 md:flex-row md:w-full md:gap-9">
+          <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700" htmlFor="text">
               Amount
             </label>
             <input
               type="number"
-              className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mt-1"
+              className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mt-1"
               value={amount}
               size="lg"
               placeholder="Enter amount"
               onChange={(e) => setAmount(Number(e.target.value))}
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             <Listbox value={base} onChange={setBase}>
               {({ open }) => (
                 <>
@@ -131,7 +129,7 @@ export const ConverterNames = () => {
                 clipRule="evenodd"></path>
             </svg>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             <Listbox value={convertTo} onChange={setConvertTo}>
               {({ open }) => (
                 <>
@@ -199,7 +197,7 @@ export const ConverterNames = () => {
           </div>
         </div>
       </form>
-      <div className="flex justify-between items-center mt-10">
+      <div className="flex flex-col-reverse items-center gap-5 justify-center md:flex-row md:justify-between">
         <div>
           <p className="flex items-center text-xs font-regular text-gray-400">
             <svg
@@ -225,7 +223,7 @@ export const ConverterNames = () => {
                 </p>
               </div>
               <div className="flex gap-1 font-normal items-baseline">
-                <p className="text-3xl font-bold">
+                <p className="text-2xl font-bold md:text-3xl">
                   {state.result?.toFixed(2)} {convertTo}
                 </p>
               </div>
@@ -234,16 +232,6 @@ export const ConverterNames = () => {
         ) : (
           ''
         )}
-        <div>
-          <button
-            className={
-              !amount
-                ? 'cursor-not-allowed inline-flex justify-center py-3 px-5 border border-transparent shadow-sm text-md font-bold rounded-md text-white bg-gray-300'
-                : 'inline-flex justify-center py-3 px-5 border border-transparent shadow-sm text-md font-bold rounded-md text-white bg-green-500 hover:bg-green-600'
-            }>
-            Convert
-          </button>
-        </div>
       </div>
     </section>
   );
