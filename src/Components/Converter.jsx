@@ -3,6 +3,9 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { Amount } from './Amount';
+import CurrencyFlag from 'react-currency-flags';
+import { currencies } from 'country-data';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -34,19 +37,7 @@ export const ConverterNames = () => {
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="flex flex-col mb-6 gap-4 items-center justify-center w-3/4 m-auto sm:w-2/4 md:flex-row md:w-full md:gap-9">
-          <div className="flex-1 w-full">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="text">
-              Amount
-            </label>
-            <input
-              type="number"
-              className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mt-1"
-              value={amount}
-              size="lg"
-              placeholder="Enter amount"
-              onChange={(e) => setAmount(Number(e.target.value))}
-            />
-          </div>
+          <Amount amount={amount} setAmount={setAmount} />
           <div className="flex-1 w-full">
             <Listbox value={base} onChange={setBase}>
               {({ open }) => (
@@ -57,7 +48,10 @@ export const ConverterNames = () => {
                   <div className="mt-1 relative">
                     <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{base}</span>
+                        <CurrencyFlag currency={base} size="md" />
+                        <span className="ml-3 block truncate">
+                          {currencies[base].name ? currencies[base].name : base}
+                        </span>
                       </span>
                       <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -84,6 +78,7 @@ export const ConverterNames = () => {
                             {({ base, active }) => (
                               <>
                                 <div className="flex items-center">
+                                  <CurrencyFlag currency={String(rate)} size="md" />
                                   <span
                                     className={classNames(
                                       base ? 'font-semibold' : 'font-normal',
@@ -139,7 +134,10 @@ export const ConverterNames = () => {
                   <div className="mt-1 relative">
                     <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{convertTo}</span>
+                        <CurrencyFlag currency={String(convertTo)} size="md" />
+                        <span className="ml-3 block truncate">
+                          {currencies[convertTo].name ? currencies[convertTo].name : base}
+                        </span>
                       </span>
                       <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -166,6 +164,7 @@ export const ConverterNames = () => {
                             {({ convertTo, active }) => (
                               <>
                                 <div className="flex items-center">
+                                  <CurrencyFlag currency={String(rate)} size="md" />
                                   <span
                                     className={classNames(
                                       convertTo ? 'font-semibold' : 'font-normal',
@@ -219,7 +218,9 @@ export const ConverterNames = () => {
             <div>
               <div className="flex gap-1 mb-1">
                 <p className="font-semibold text-sm text-gray-500">
-                  {amount} {base} =
+                  {amount}
+                  &nbsp;
+                  {base} =
                 </p>
               </div>
               <div className="flex gap-1 font-normal items-baseline">
@@ -228,6 +229,7 @@ export const ConverterNames = () => {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
+                  &nbsp;
                   {convertTo}
                 </p>
               </div>
