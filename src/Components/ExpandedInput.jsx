@@ -1,5 +1,4 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { currencies } from 'country-data';
 import { Fragment } from 'react';
 import { SelectorIcon } from '@heroicons/react/solid';
 import currencyData from './data/currency-data.json';
@@ -17,7 +16,6 @@ export const ExpandedInput = ({ select, setSelect, rates }) => {
       ? currencyData[currencyCode.toUpperCase()]
       : '🏳️';
   };
-  console.log(select);
   return (
     <div className="flex-1 w-full">
       <Listbox value={select} onChange={setSelect}>

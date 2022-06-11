@@ -10,7 +10,7 @@ export const Amount = ({ amount, setAmount }) => {
         value={amount > 0 ? amount : 'Enter amount bigger then 0'}
         size="lg"
         placeholder="Enter amount"
-        onChange={(e) => setAmount(Number(e.target.value))}
+        onChange={(e) => setAmount(e.target.value)}
       />
     </div>
   );
