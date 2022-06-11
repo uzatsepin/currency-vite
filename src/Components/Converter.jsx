@@ -5,7 +5,6 @@ import { Amount } from './Amount';
 import { ExpandedInput } from './ExpandedInput';
 import { SwitchBtn } from './SwitchBtn';
 import { ConvertResult } from './ConvertResult';
-import { CurrencyDollarIcon } from '@heroicons/react/solid';
 
 export const ConverterNames = () => {
   const [convertTo, setConvertTo] = useState('USD');
@@ -24,8 +23,7 @@ export const ConverterNames = () => {
   return (
     <section className="pt-14 bg-white pb-14 px-6 shadow-md dark:bg-slate-800">
       <h1 className="flex items-center justify-center text-black text-2xl mb-10 font-semibold dark:text-gray-200">
-        Currency Exchange Rate
-        <CurrencyDollarIcon className="h-8 w-8 text-gray-800 ml-2 dark:text-gray-200" />
+        Currency Exchange Rate 💰
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="flex flex-col mb-6 gap-4 items-center justify-center w-3/4 m-auto sm:w-2/4 md:flex-row md:w-full md:gap-9">

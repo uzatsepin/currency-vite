@@ -18,11 +18,7 @@ function App() {
     <div className="h-full bg-gray-100 transition ease-in-out dark:bg-slate-700 duration-200 md:h-screen">
       <div className="max-w-4xl m-auto pb-6 pt-14 pr-4 pl-4">
         <button onClick={() => toggleTheme()} className="float-right py-3 px-3">
-          {theme === 'light' ? (
-            <SunIcon className="h-7 w-7" />
-          ) : (
-            <MoonIcon className="h-7 w-7 transition ease-in-out dark:text-gray-200 duration-200" />
-          )}
+          {theme === 'light' ? '🌖' : '🌒'}
         </button>
         <ConverterNames />
       </div>

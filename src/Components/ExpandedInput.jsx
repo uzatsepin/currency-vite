@@ -1,14 +1,23 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { currencies } from 'country-data';
 import { Fragment } from 'react';
-import CurrencyFlag from 'react-currency-flags';
 import { SelectorIcon } from '@heroicons/react/solid';
+import currencyData from './data/currency-data.json';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export const ExpandedInput = ({ select, setSelect, rates }) => {
+  const getEmojiByCurrencyCode = (currencyCode) => {
+    if (!currencyCode) {
+      return null;
+    }
+    return currencyData[currencyCode.toUpperCase()]
+      ? currencyData[currencyCode.toUpperCase()]
+      : '🏳️';
+  };
+  console.log(select);
   return (
     <div className="flex-1 w-full">
       <Listbox value={select} onChange={setSelect}>
@@ -20,10 +29,8 @@ export const ExpandedInput = ({ select, setSelect, rates }) => {
             <div className="mt-1 relative">
               <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600 dark:border-slate-600 dark:text-gray-200">
                 <span className="flex items-center">
-                  <CurrencyFlag currency={select} size="md" />
-                  <span className="ml-3 block truncate dark:text-gray-200">
-                    {currencies[select].name ? currencies[select].name : select}
-                  </span>
+                  {getEmojiByCurrencyCode(select)}
+                  <span className="ml-3 block truncate dark:text-gray-200">{select}</span>
                 </span>
                 <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -50,7 +57,7 @@ export const ExpandedInput = ({ select, setSelect, rates }) => {
                       {({ select, active }) => (
                         <>
                           <div className="flex items-center">
-                            <CurrencyFlag currency={String(rate)} size="md" />
+                            {getEmojiByCurrencyCode(rate)}
                             <span
                               className={classNames(
                                 select ? 'font-semibold' : 'font-normal',
