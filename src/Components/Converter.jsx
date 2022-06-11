@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { SelectorIcon, SunIcon, MoonIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Amount } from './Amount';
@@ -11,7 +11,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export const ConverterNames = () => {
+export const ConverterNames = ({ theme, setTheme }) => {
   const [convertTo, setConvertTo] = useState('USD');
   const [base, setBase] = useState('UAH');
   const [state, setState] = useState([]);
@@ -25,14 +25,22 @@ export const ConverterNames = () => {
     axios.get('https://api.exchangerate.host/latest').then((res) => setRates(res.data.rates));
   }, [amount, convertTo, base]);
 
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
   const swapConversion = () => {
     setBase(convertTo);
     setConvertTo(base);
   };
 
   return (
-    <section className="pt-14 bg-white pb-14 px-6 shadow-md">
-      <h1 className="text-black text-2xl mb-10 font-semibold text-center">
+    <section className="pt-14 bg-white pb-14 px-6 shadow-md dark:bg-slate-800">
+      <button onClick={() => toggleTheme()}>
+        {theme === 'light' ? (
+          <SunIcon className="h-5 w-5" />
+        ) : (
+          <MoonIcon className="h-5 w-5 transition ease-in-out dark:text-gray-200 duration-200" />
+        )}{' '}
+      </button>
+      <h1 className="text-black text-2xl mb-10 font-semibold text-center dark:text-gray-200">
         Currency Exchange Rate 💵
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -42,14 +50,14 @@ export const ConverterNames = () => {
             <Listbox value={base} onChange={setBase}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium text-gray-700">
+                  <Listbox.Label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     From:
                   </Listbox.Label>
                   <div className="mt-1 relative">
-                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600 dark:border-slate-600 dark:text-gray-200">
                       <span className="flex items-center">
                         <CurrencyFlag currency={base} size="md" />
-                        <span className="ml-3 block truncate">
+                        <span className="ml-3 block truncate dark:text-gray-200">
                           {currencies[base].name ? currencies[base].name : base}
                         </span>
                       </span>
@@ -93,9 +101,7 @@ export const ConverterNames = () => {
                                     className={classNames(
                                       active ? 'text-white' : 'text-indigo-600',
                                       'absolute inset-y-0 right-0 flex items-center pr-4',
-                                    )}>
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                  </span>
+                                    )}></span>
                                 ) : null}
                               </>
                             )}
@@ -109,14 +115,14 @@ export const ConverterNames = () => {
             </Listbox>
           </div>
           <div
-            className="border-2 border-blue-100 rounded-full p-4 cursor-pointer hover:border-green-300"
+            className="border-2 border-blue-100 rounded-full p-4 cursor-pointer hover:border-indigo-500 dark:border-slate-700 dark:hover:border-indigo-500"
             onClick={() => swapConversion()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 17 17"
               aria-hidden="true"
-              className="w-4 h-4 text-green-500 miscellany___StyledIconSwap-sc-1r08bla-1 fZJuOo">
+              className="w-4 h-4 text-indigo-500 miscellany___StyledIconSwap-sc-1r08bla-1 fZJuOo">
               <path
                 fill="currentColor"
                 fillRule="evenodd"
@@ -128,14 +134,14 @@ export const ConverterNames = () => {
             <Listbox value={convertTo} onChange={setConvertTo}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium text-gray-700">
+                  <Listbox.Label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     To:
                   </Listbox.Label>
                   <div className="mt-1 relative">
-                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-slate-600 dark:border-slate-600 dark:text-white">
                       <span className="flex items-center">
                         <CurrencyFlag currency={String(convertTo)} size="md" />
-                        <span className="ml-3 block truncate">
+                        <span className="ml-3 block truncate dark:text-gray-200">
                           {currencies[convertTo].name ? currencies[convertTo].name : base}
                         </span>
                       </span>
@@ -179,9 +185,7 @@ export const ConverterNames = () => {
                                     className={classNames(
                                       active ? 'text-white' : 'text-indigo-600',
                                       'absolute inset-y-0 right-0 flex items-center pr-4',
-                                    )}>
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                  </span>
+                                    )}></span>
                                 ) : null}
                               </>
                             )}
@@ -217,14 +221,14 @@ export const ConverterNames = () => {
           <>
             <div>
               <div className="flex gap-1 mb-1">
-                <p className="font-semibold text-sm text-gray-500">
+                <p className="font-semibold text-sm text-gray-500 dark:text-gray-400">
                   {amount}
                   &nbsp;
                   {base} =
                 </p>
               </div>
               <div className="flex gap-1 font-normal items-baseline">
-                <p className="text-2xl font-bold md:text-3xl">
+                <p className="text-2xl font-bold md:text-3xl dark:text-gray-200">
                   {state.result?.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
