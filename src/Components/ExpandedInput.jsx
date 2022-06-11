@@ -47,7 +47,7 @@ export const ExpandedInput = ({ select, setSelect, rates }) => {
                       key={rate}
                       className={({ active }) =>
                         classNames(
-                          active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                          active ? 'text-white bg-indigo-600' : 'text-gray-900 dark:text-gray-200',
                           'cursor-default select-none relative py-2 pl-3 pr-9',
                         )
                       }
