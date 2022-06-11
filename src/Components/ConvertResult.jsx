@@ -17,7 +17,7 @@ export const ConvertResult = ({ amount, base, state, convertTo }) => {
           &nbsp; This conversion uses midmarket rates.
         </p>
       </div>
-      {amount ? (
+      {amount > 0 ? (
         <>
           <div>
             <div className="flex gap-1 mb-1">
@@ -34,7 +34,7 @@ export const ConvertResult = ({ amount, base, state, convertTo }) => {
                   maximumFractionDigits: 2,
                 })}
                 &nbsp;
-                {convertTo}
+                {convertTo ? convertTo : ''}
               </p>
             </div>
           </div>
